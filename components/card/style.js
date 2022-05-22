@@ -41,16 +41,22 @@ const CardStyle = styled.div`
                     font-size: 12px;
                     font-weight: 500;
                     color: #aaa;
-                    @media (max-width: ${width.mobile}px) {
+                    @media (max-width: ${width.tablet}px) {
                         font-size: 10px;
+                    }
+                    @media (max-width: ${width.mobile}px) {
+                        font-size: 8px;
                     }
                 }
                 &-value {
                     font-weight: 500;
                     font-size: 14px;
                     overflow-wrap: break-word;
-                    @media (max-width: ${width.mobile}px) {
+                    @media (max-width: ${width.tablet}px) {
                         font-size: 12px;
+                    }
+                    @media (max-width: ${width.mobile}px) {
+                        font-size: 10px;
                     }
                 }
             }
