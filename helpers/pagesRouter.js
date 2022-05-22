@@ -1,3 +1,4 @@
+// NAV LIST SIDEBAR PAGE
 const pagesRouter = [
     {
         name: "Beranda",

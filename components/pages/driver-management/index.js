@@ -21,7 +21,8 @@ const DriverManagement = () => {
         let value = e.target.value;
         setInputValue(value);
     };
-    const handleSearchDriver = () => {
+    const handleSearchDriver = (e) => {
+        e.preventDefault();
         let pagination = {
             start: 0,
             end: 4,
@@ -87,17 +88,19 @@ const DriverManagement = () => {
                     <Col lg={5}>
                         <Row>
                             <Col lg={6}>
-                                <div className="section-top__search">
-                                    <i
-                                        className="fas fa-search"
-                                        onClick={handleSearchDriver}
-                                    ></i>
-                                    <Input
-                                        onChange={handleInputValue}
-                                        type="text"
-                                        placeholder="Cari Driver"
-                                    />
-                                </div>
+                                <form action="" onSubmit={handleSearchDriver}>
+                                    <div className="section-top__search">
+                                        <i
+                                            className="fas fa-search"
+                                            onClick={handleSearchDriver}
+                                        ></i>
+                                        <Input
+                                            onChange={handleInputValue}
+                                            type="text"
+                                            placeholder="Cari Driver"
+                                        />
+                                    </div>
+                                </form>
                             </Col>
                             <Col lg={6}>
                                 <Button
