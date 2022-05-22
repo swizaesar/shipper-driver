@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-import serviceRedux from "../Services";
+import serviceRedux from "../services";
 
 const store = createStore(serviceRedux, applyMiddleware(thunk));
 const StoreProvider = ({ children }) => {

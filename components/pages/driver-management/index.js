@@ -5,6 +5,7 @@ import { LocalStorage } from "../../../helpers/localStorage";
 import fetchApi from "../../../services/fetchApi";
 import CardUser from "../../card";
 import Style from "./style";
+import SkeletonLoading from "../../skeleton";
 
 const DriverManagement = () => {
     const [data, setData] = React.useState(false);
@@ -114,7 +115,7 @@ const DriverManagement = () => {
             <div className="section-content">
                 <div className="section-content__card">
                     <div>
-                        {data &&
+                        {data ? (
                             data.map((item, key) => {
                                 return (
                                     key >= showData.start &&
@@ -127,7 +128,35 @@ const DriverManagement = () => {
                                         </div>
                                     )
                                 );
-                            })}
+                            })
+                        ) : (
+                            <React.Fragment>
+                                <div className="section-content__card-col">
+                                    <SkeletonLoading
+                                        width="100%"
+                                        height="250px"
+                                    />
+                                </div>
+                                <div className="section-content__card-col">
+                                    <SkeletonLoading
+                                        width="100%"
+                                        height="250px"
+                                    />
+                                </div>
+                                <div className="section-content__card-col">
+                                    <SkeletonLoading
+                                        width="100%"
+                                        height="250px"
+                                    />
+                                </div>
+                                <div className="section-content__card-col">
+                                    <SkeletonLoading
+                                        width="100%"
+                                        height="250px"
+                                    />
+                                </div>
+                            </React.Fragment>
+                        )}
                     </div>
                 </div>
                 <div className="section-content__button">

@@ -1,6 +1,6 @@
 import React from "react";
 import Style from "./style";
-const Home = () => {
+const Pickup = () => {
     return <Style>Tidak Tersedia</Style>;
 };
-export default Home;
+export default Pickup;
