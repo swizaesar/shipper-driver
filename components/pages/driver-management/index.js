@@ -8,19 +8,25 @@ import Style from "./style";
 import SkeletonLoading from "../../skeleton";
 
 const DriverManagement = () => {
+    // data driver
     const [data, setData] = React.useState(false);
+    // value input search
     const [inputValue, setInputValue] = React.useState("");
+    // state show min and max length data to show
     const [showData, setShowData] = React.useState({
         start: 0,
         end: 4,
     });
+    // state to give condition overflow style
+    const [calcOverFlow, setCalcOverFlow] = React.useState(5);
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const isFirstGet = true;
+    // function input search
     const handleInputValue = (e) => {
         let value = e.target.value;
         setInputValue(value);
     };
+    // function search  driver
     const handleSearchDriver = (e) => {
         e.preventDefault();
         let pagination = {
@@ -35,29 +41,44 @@ const DriverManagement = () => {
                         .indexOf(inputValue.toUpperCase()) > -1
             )
         );
+        setCalcOverFlow(
+            state.users.data.results.filter(
+                (item) =>
+                    item.name.first
+                        .toUpperCase()
+                        .indexOf(inputValue.toUpperCase()) > -1
+            ).length
+        );
         setShowData(pagination);
         LocalStorage().save("page", pagination);
     };
+    // function next page
     const handleNextPage = () => {
         let dataPage = {
             start: showData.start + 5,
             end: showData.end + 5,
         };
         setShowData(dataPage);
+        setCalcOverFlow(calcOverFlow - 5);
         LocalStorage().save("page", dataPage);
     };
+    // function previous page
     const handlePreviousPage = () => {
         let dataPage = {
             start: showData.start - 5,
             end: showData.end - 5,
         };
+        setCalcOverFlow(calcOverFlow + 5);
         setShowData(dataPage);
         LocalStorage().save("page", dataPage);
     };
     React.useEffect(() => {
+        // take user list from store
         if (state?.users?.isSuccess) {
             setData(state.users.data.results);
+            setCalcOverFlow(state.users.data.results.length);
         }
+        // checking state if false call API ser list driver and save to store
         if (state?.users === false) {
             let params = {
                 results: 30,
@@ -65,6 +86,8 @@ const DriverManagement = () => {
             fetchApi.getUsersList({ dispatch, params });
         }
     }, [state]);
+
+    // save condition page in local storage
     React.useEffect(() => {
         setShowData(
             LocalStorage().get("page") || {
@@ -74,7 +97,8 @@ const DriverManagement = () => {
         );
     }, []);
     return (
-        <Style>
+        <Style totalData={calcOverFlow}>
+            {/* HEADER SECTION */}
             <div className="section-top">
                 <Row className="justify-content-between align-items-center">
                     <Col lg={7}>
@@ -115,6 +139,7 @@ const DriverManagement = () => {
                     </Col>
                 </Row>
             </div>
+            {/* CONTENT SECTION */}
             <div className="section-content">
                 <div className="section-content__card">
                     <div>
@@ -133,6 +158,7 @@ const DriverManagement = () => {
                                 );
                             })
                         ) : (
+                            // LOADING CARD STYLE BEFORE GET DATA
                             <React.Fragment>
                                 <div className="section-content__card-col">
                                     <SkeletonLoading
@@ -173,7 +199,7 @@ const DriverManagement = () => {
                     <Button
                         onClick={handleNextPage}
                         className="section-content__button-action"
-                        disabled={showData.end + 1 === data.length}
+                        disabled={showData.end + 1 >= data.length}
                     >
                         Next Page <i className="fas fa-angle-right"></i>
                     </Button>

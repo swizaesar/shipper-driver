@@ -76,7 +76,11 @@ const Style = styled.div`
                     display: flex;
                     margin-right: -15px;
                     margin-left: -15px;
-                    width: 1400px;
+                    /* CHECKING WIDTH OVERFLOW CONDITION RENDERING TOTAL DATA */
+                    width: ${(props) =>
+                        props.totalData < 5
+                            ? `calc(280 * ${props.totalData}px)`
+                            : "1400px"};
                     @media (max-width: ${width.mobile}px) {
                         width: 100%;
                         margin: 0;
